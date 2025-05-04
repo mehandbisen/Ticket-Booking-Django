@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f7c3a1, #c5e1f2);
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            background: #333;
+            padding: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar li {
+            margin: 0 25px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #ffb347;
+            text-transform: uppercase;
+        }
+
+        /* Header Styling */
+        header {
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            background-image: url('https://images.unsplash.com/photo-1511988617502-bb0f6ec80363');
+            background-size: cover;
+            background-position: center;
+        }
+
+        header h1 {
+            font-size: 50px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+        }
+
+        /* Register Form */
+        .register-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .register-container h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #444;
+            margin-bottom: 30px;
+        }
+
+        .register-container label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .register-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .register-container button {
+            background-color: #ff7043;
+            color: white;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 5px;
+            border: none;
+            width: 100%;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .register-container button:hover {
+            background-color: #ff5722;
+            transform: scale(1.05);
+        }
+
+        .register-container .login-link {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .register-container .login-link a {
+            color: #ff7043;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .register-container .login-link a:hover {
+            color: #ff5722;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 15px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            .register-container {
+                width: 90%;
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .register-container h2 {
+                font-size: 24px;
+            }
+
+            .register-container input {
+                padding: 10px;
+            }
+
+            .register-container button {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header and Navigation Bar -->
+    <header>
+        <h1>Ticket Booking System</h1>
+        <nav>
+            <ul class="navbar">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'book_ticket' 1 %}">Book Ticket</a></li>
+                <li><a href="{% url 'booking_history' %}">Booking History</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Register Form Section -->
+    <div class="register-container">
+        <h2>Register</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" name="username" required><br>
+            
+            <label for="password">Password</label>
+            <input type="password" name="password" required><br>
+            
+            <button type="submit">Register</button>
+        </form>
+        
+        {% if error %}
+            <p style="color: red; margin-top: 10px;">{{ error }}</p>
+        {% endif %}
+
+        <div class="login-link">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Ticket Booking System. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
